@@ -18,9 +18,9 @@ PS> python ofrenda.py memories
 Ofrenda Keeper — weaving 3 remembrance(s)
 Model: gemma3:1b (local, via Ollama) | Today: 2026-10-30
 
-  [TRIBUTE] Dada Ji (fictional)     | gemma-local
-  [TRIBUTE] Miss Amina (fictional)  | gemma-local
-  [TRIBUTE] Chand (fictional)       | gemma-local
+  [TRIBUTE] Rashid Mahmood (fictional)  | gemma-local
+  [TRIBUTE] Amina Siddiqui (fictional)  | gemma-local
+  [TRIBUTE] Moti (fictional)            | gemma-local
 
 Wrote: out/ofrenda.html — open it in your browser.
 ```
