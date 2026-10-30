@@ -1,0 +1,55 @@
+---
+title: "I Built a Digital Ofrenda That Keeps Your Family's Stories Off the Cloud"
+published: true
+tags: devchallenge, hf26challenge
+cover_image:
+---
+
+*This post is my submission for the Hacktoberfest 2026 DEV Challenge, Week 4: Ghost in the Machine.*
+
+## What I Built
+
+**Ofrenda Keeper** — a local remembrance keeper for Día de los Muertos. You write memories of loved ones as simple text files, and one command weaves them into a candle-lit remembrance page that lives entirely on your own machine. No cloud, no account, no API — because family stories are the most private data there is.
+
+## Demo
+
+```
+PS> python ofrenda.py memories
+Ofrenda Keeper — weaving 3 remembrance(s)
+Model: gemma3:1b (local, via Ollama) | Today: 2026-10-30
+
+  [TRIBUTE] Dada Ji (fictional)     | gemma-local
+  [TRIBUTE] Miss Amina (fictional)  | gemma-local
+  [TRIBUTE] Chand (fictional)       | gemma-local
+
+Wrote: out/ofrenda.html — open it in your browser.
+```
+
+The page: a dark, warm ofrenda with flickering CSS candles, marigold accents, each person's name and dates, a short tribute, and their memory in their family's own words.
+
+## Code
+
+{% github hinazia01/ofrenda-keeper %}
+
+## How I Built It
+
+The architecture follows one rule I learned the hard way on a previous project: **the model must never be trusted with structure — only with words.**
+
+- **Rules do the structure.** A small parser reads `Name:`, `Dates:`, `Place:`, `Memory:` fields from each text file. Every word of user content is HTML-escaped before it touches the page (a `<script>` in a memory becomes harmless text, never code). The page itself is one self-contained HTML file — I tested that it makes zero external requests.
+- **Gemma does only the writing.** The local model (gemma3:1b via Ollama) receives the person's details and writes a warm 2–3 sentence tribute. That's it — it never sees file paths, never builds HTML, never decides anything structural.
+- **Honest fallback.** If Ollama is unreachable, a template tribute is used instead — and every tribute on the page is labelled with the engine that wrote it (`gemma-local` or `fallback-rules`). A prompt-echo guard also rejects replies where a small model echoes the prompt's instructions instead of writing a real tribute.
+- **13 automated tests** lock all of this in: parsing, the echo guard, HTML escaping, page self-containment, and a full end-to-end run.
+
+Your real memories stay in `memories/`, which is gitignored — they can never be pushed anywhere by accident.
+
+## Why Does Open Innovation Matter?
+
+A remembrance is intimate data: names, dates, the stories a family tells about its dead. A closed cloud service could build this in an afternoon — but then your family's memories would live on someone else's server, inside a product that could change its terms, start charging, or simply shut down one day. The dead can't consent to that.
+
+Openness fixes it at the root: an open-weight model I can run myself, on a machine I own, with code I can read and keep. Ofrenda Keeper works with the internet off, costs nothing per tribute, and will still work in twenty years — which is exactly the timescale a remembrance deserves.
+
+*Disclosure: I built this with the help of an AI coding assistant; every line was read, tested, and run by me, and the demo above is from a real run on my own PC.*
+
+## Prize Categories
+
+- Best Use of Gemma
