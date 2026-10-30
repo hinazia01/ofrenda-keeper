@@ -38,7 +38,7 @@ python ofrenda.py memories
 Write your own memories as `.txt` files in `memories/`:
 
 ```
-Name: Dada Ji
+Name: Rashid Mahmood
 Dates: 1940 - 2019
 Place: Bahawalpur
 Memory: He read the newspaper aloud every sunrise...
